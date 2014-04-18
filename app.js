@@ -5,8 +5,10 @@ module.exports = function() {
     var logger = require('morgan');
     var path = require('path');
     var jade = require('jade');
-    var router = require('./routes');
     var db = require('./db');
+
+    var apiRoutes = require('./routes/api');
+    var appRoutes = require('./routes/app');
 
     app.set('view engine', 'jade');
     app.set('views', path.join(__dirname, 'views'));
@@ -15,7 +17,8 @@ module.exports = function() {
     app.use(bodyParser());
     app.use(express.static(path.join(__dirname, 'public')));
 
-    app.use('/api', router);
+    app.use('/api', apiRoutes);
+    app.use('/', appRoutes);
 
     return app;
 }
